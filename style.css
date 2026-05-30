@@ -1,0 +1,833 @@
+/* ==========================================
+   AI 업무 자동화 교안 스타일시트 (style.css)
+   ========================================== */
+
+/* 1. 디자인 시스템 토큰 (CSS 변수) */
+:root {
+  --primary-color: #4f46e5;      /* Indigo */
+  --primary-hover: #4338ca;
+  --secondary-color: #0f172a;    /* Navy/Slate-900 */
+  --accent-color: #f59e0b;       /* Amber */
+  --text-main: #334155;          /* Slate-700 */
+  --text-dark: #0f172a;          /* Slate-900 */
+  --text-muted: #64748b;         /* Slate-500 */
+  --bg-light: #f8fafc;           /* Slate-50 */
+  --bg-white: #ffffff;
+  --bg-terminal: #1e293b;        /* Slate-800 */
+  --border-color: #e2e8f0;       /* Slate-200 */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. 전역 리셋 & 초기값 설정 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+  color: var(--text-dark);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* 3. 헤더 디자인 (상단 컨트롤 바) */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.main-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.main-header .logo .emoji {
+  font-size: 1.75rem;
+}
+
+.main-header .logo h1 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 공통 버튼 스타일 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* 4. 컨테이너 & 레이아웃 구조 */
+.app-container {
+  display: flex;
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+}
+
+/* 사이드바 네비게이션 (화면 전용) */
+.sidebar {
+  width: 280px;
+  background-color: var(--bg-white);
+  border-right: 1px solid var(--border-color);
+  padding: 2rem 1.5rem;
+  position: fixed;
+  top: 70px;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 90;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-item .num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.nav-item .txt {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.nav-item:hover {
+  background-color: var(--bg-light);
+}
+
+.nav-item.active {
+  background-color: rgba(79, 70, 229, 0.08);
+}
+
+.nav-item.active .num {
+  color: var(--primary-color);
+  opacity: 1;
+}
+
+.nav-item.active .txt {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+/* 5. 메인 본문 콘텐츠 영역 */
+.content-area {
+  flex: 1;
+  margin-left: 280px;
+  padding: 3rem 4rem;
+  max-width: 1100px;
+}
+
+/* 각 장(페이지) 콘텐츠 숨김/노출 */
+.doc-page {
+  display: none;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.doc-page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   6. 세부 컴포넌트 디자인 (Aesthetic)
+   ========================================== */
+
+/* --- [표지 세부 디자인] --- */
+.cover-section {
+  display: none;
+  min-height: 70vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-section.active {
+  display: flex;
+}
+
+.cover-inner {
+  text-align: center;
+  max-width: 750px;
+  background: var(--bg-white);
+  padding: 4.5rem 3.5rem;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.cover-inner .badge {
+  display: inline-block;
+  background-color: rgba(79, 70, 229, 0.08);
+  color: var(--primary-color);
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+}
+
+.cover-inner .main-title {
+  font-size: 2.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+
+.cover-inner .main-title .highlight {
+  color: var(--primary-color);
+  position: relative;
+  display: inline-block;
+}
+
+.cover-inner .main-title .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-color: rgba(79, 70, 229, 0.15);
+  z-index: -1;
+}
+
+.cover-inner .subtitle {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  margin-bottom: 3.5rem;
+}
+
+.cover-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+  text-align: left;
+}
+
+.cover-meta .meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cover-meta .meta-item .label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.cover-meta .meta-item .val {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.cover-footer {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* --- [일반 단원 공통 디자인] --- */
+.page-header {
+  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 2rem;
+}
+
+.page-header .chapter-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.page-header h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.goal-box {
+  background-color: var(--bg-light);
+  border-left: 4px solid var(--primary-color);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.goal-box strong {
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* --- [타임라인 / 단계별 진행] --- */
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 11px;
+  width: 2px;
+  background-color: var(--border-color);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 3.5rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-badge {
+  position: absolute;
+  left: -2.5rem;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--bg-white);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  z-index: 10;
+  transition: var(--transition-fast);
+}
+
+/* 가로 뱃지형으로 변조(인쇄용) 혹은 보기좋게 확장 */
+.timeline-item .timeline-badge {
+  width: auto;
+  height: 26px;
+  left: -2.85rem;
+  padding: 0 0.5rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+}
+
+.timeline-content {
+  padding-left: 0.5rem;
+}
+
+.timeline-content h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 각 단계 카드 */
+.step-card {
+  background-color: var(--bg-white);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.step-card p.description {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* 리스트 스타일 */
+.step-card ul, .step-card ol {
+  padding-left: 1.25rem;
+}
+
+.step-card li {
+  margin-bottom: 1.25rem;
+}
+
+.step-card li:last-child {
+  margin-bottom: 0;
+}
+
+.step-card li strong {
+  color: var(--text-dark);
+  font-size: 1rem;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+
+.step-card li p {
+  font-size: 0.925rem;
+  color: var(--text-main);
+}
+
+/* 서브 단계 레이아웃 */
+.sub-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.sub-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background-color: var(--bg-light);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+}
+
+.sub-step .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  margin-top: 0.6rem;
+  flex-shrink: 0;
+}
+
+.sub-step div {
+  font-size: 0.925rem;
+}
+
+/* 폰트/코드 스페셜 스타일 */
+code.filepath, code.filename {
+  font-family: 'Consolas', 'Courier New', monospace;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+/* --- [프롬프트 상자] --- */
+.prompt-box {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.prompt-box:last-child {
+  margin-bottom: 0;
+}
+
+.prompt-header {
+  background-color: #f1f5f9;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.prompt-header .tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.prompt-header .tag.role {
+  background-color: rgba(79, 70, 229, 0.1);
+  color: var(--primary-color);
+}
+
+.prompt-header .tag.request {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--accent-color);
+}
+
+.prompt-header .tag.feedback {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.btn-copy {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-copy:hover {
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+  border-color: var(--primary-color);
+}
+
+.btn-copy.copied {
+  background-color: #10b981;
+  color: var(--bg-white);
+  border-color: #10b981;
+}
+
+.prompt-content {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  padding: 1.25rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* --- [터미널 스타일] --- */
+.terminal {
+  background-color: var(--bg-terminal);
+  color: #f8fafc;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin: 0.75rem 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.terminal .prompt-char {
+  color: #38bdf8;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+/* --- [알럿 상자] --- */
+.warning-alert, .info-alert {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.925rem;
+  margin-bottom: 1.25rem;
+}
+
+.warning-alert {
+  background-color: #fffbeb;
+  border-left: 4px solid var(--accent-color);
+  color: #92400e;
+}
+
+.info-alert {
+  background-color: rgba(79, 70, 229, 0.05);
+  border-left: 4px solid var(--primary-color);
+  color: var(--text-dark);
+}
+
+.info-alert strong {
+  color: var(--primary-color);
+}
+
+.info-alert p {
+  margin: 0.5rem 0;
+}
+
+.info-alert p.desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.margin-top {
+  margin-top: 1.25rem;
+}
+
+/* ==========================================
+   7. A4 인쇄(출력) 스타일 정의 (@media print)
+   ========================================== */
+@media print {
+  /* 브라우저 인쇄 설정 */
+  @page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+  }
+
+  /* 화면용 레이아웃 요소 제거 */
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background-color: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .app-container {
+    margin-top: 0 !important;
+    display: block !important;
+  }
+
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* 모든 단원(장) 인쇄 시 표시 */
+  .doc-page {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    page-break-before: always !important; /* 각 장을 무조건 새 페이지에 */
+    break-before: page !important;
+  }
+
+  /* 표지 특수 인쇄 스타일 */
+  #cover-page {
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+  }
+
+  .cover-inner {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 4rem 2rem !important;
+    background: transparent !important;
+  }
+
+  .cover-inner .main-title {
+    font-size: 32pt !important;
+  }
+
+  /* 타임라인 수직 실선 인쇄 가시성 */
+  .timeline::before {
+    background-color: #cbd5e1 !important;
+  }
+
+  .timeline-badge {
+    background-color: #4f46e5 !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .step-card {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important; /* 카드 내부에서 끊김 방지 */
+    break-inside: avoid !important;
+  }
+
+  .prompt-box, .terminal, .warning-alert, .info-alert {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .prompt-header {
+    background-color: #e2e8f0 !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .prompt-header .tag {
+    border: 1px solid #94a3b8 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .btn-copy {
+    display: none !important;
+  }
+
+  .terminal {
+    background-color: #f1f5f9 !important;
+    color: #000000 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  .terminal .prompt-char {
+    color: #0f172a !important;
+  }
+
+  .warning-alert {
+    background-color: #fffdf5 !important;
+    border: 1px solid #f59e0b !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .info-alert {
+    background-color: #f8fafc !important;
+    border: 1px solid #4f46e5 !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* 8. 이미지 컴포넌트 스타일 */
+.step-img-container {
+  margin: 1.5rem 0;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.step-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast);
+  display: block;
+  margin: 0 auto;
+}
+
+.step-img:hover {
+  transform: scale(1.008);
+}
+
+@media print {
+  .step-img {
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    max-height: 160mm; /* A4 용지를 넘지 않도록 제한 */
+    object-fit: contain;
+  }
+}
+
